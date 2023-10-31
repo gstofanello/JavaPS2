@@ -4,7 +4,7 @@ RUN mvn clean package -Pprod -DskipTests
 
 # Path: Dockerfile
 FROM openjdk:17-jdk-slim
-COPY --from=build /target/ExampleJpa.jar app.jar
+COPY --from=build /target/*.jar app.jar
 ENV PORT = 8080
 EXPOSE 8080
 ENTRYPOINT ["java","-jar","app.jar"]
