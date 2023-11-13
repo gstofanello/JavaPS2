@@ -1,3 +1,5 @@
+package br.mackenzie.ps2.CorsConfig;
+
 @Configuration
 public class CorsConfig implements WebMvcConfigurer {
 
