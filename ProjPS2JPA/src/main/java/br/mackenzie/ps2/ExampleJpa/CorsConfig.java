@@ -1,3 +1,8 @@
+package br.mackenzie.ps2.CorsConfig;
+
+import org.springframework.web.servlet.config.annotation.*;
+import org.springframework.context.annotation.*;
+
 @Configuration
 public class CorsConfig implements WebMvcConfigurer {
 
