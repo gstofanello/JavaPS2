@@ -1,4 +1,4 @@
-package br.mackenzie.ps2.CorsConfig;
+package br.mackenzie.ps2;
 
 import org.springframework.web.servlet.config.annotation.*;
 import org.springframework.context.annotation.*;
