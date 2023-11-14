@@ -1,6 +1,6 @@
 //Gabriel Sanches Tofanello 42251631
 //Rodrigo Pampolin Mendes   42230403
-package br.mackenzie.ps2.ExampleJpa;
+package br.mackenzie.ps2.projJPA;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

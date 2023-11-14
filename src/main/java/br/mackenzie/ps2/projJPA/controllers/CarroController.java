@@ -1,6 +1,6 @@
 //Gabriel Sanches Tofanello 42251631
 //Rodrigo Pampolin Mendes   42230403
-package br.mackenzie.ps2.ExampleJpa.controllers;
+package br.mackenzie.ps2.projJPA.controllers;
 
 import java.util.List;
 import java.util.Optional;
@@ -19,8 +19,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
-import br.mackenzie.ps2.ExampleJpa.entities.Carro;
-import br.mackenzie.ps2.ExampleJpa.repositories.CarroRepository;
+import br.mackenzie.ps2.projJPA.entities.Carro;
+import br.mackenzie.ps2.projJPA.repositories.CarroRepository;
 
 @RestController
 @RequestMapping("/carros")

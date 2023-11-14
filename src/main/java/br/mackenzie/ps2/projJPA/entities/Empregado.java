@@ -1,6 +1,6 @@
 //Gabriel Sanches Tofanello 42251631
 //Rodrigo Pampolin Mendes   42230403
-package br.mackenzie.ps2.ExampleJpa.entities;
+package br.mackenzie.ps2.projJPA.entities;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
