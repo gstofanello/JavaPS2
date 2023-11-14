@@ -10,5 +10,7 @@ public class ProjPS2JPA {
 
 	public static void main(String[] args) {
 		SpringApplication.run(ProjPS2JPA.class, args);
+
+		
 	}
 }
