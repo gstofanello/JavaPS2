@@ -1,36 +1,29 @@
-import Cards from "../api/page";
+import Cards from "./api/page";
+import Link from "next/link";
+import Header from "./components/header.jsx";
 
 export default function Home() {
   return (
-    <main>
-      <h3>Controle de Carros dos Empregados</h3>
-      <section className="flex flex-col justify-center">
-        <div>
-          <input
-            type="text"
-            placeholder="Modelo do Carro"
-            className="rounded-md p-4 m-3 rounded h-5 border-solid border-2 border-black"
-            // value={modeloVeiculo}
-            // onChange={(e) => setModeloVeiculo(e.target.value)}
-          />
-          <input
-            type="text"
-            placeholder="Nome do Funcionário"
-            className="rounded-md p-4 m-3 rounded h-5 border-solid border-2 border-black"
-            // value={nomeFuncionario}
-            // onChange={(e) => setNomeFuncionario(e.target.value)}
+    <main className="font-sans w-full h-vh">
+      <Header/>
+      <section className=" w-full  flex justify-center items-center flex-col">
+        <hr className="border-[#E1CCA8]  w-full border-solid border-0 border-t-[1.5px] m-0 p-0" />
+        <div className="bg-[#1A3430] w-full flex justify-center items-center ">
+          <img
+            className="my-4 "
+            src="https://s3.ecompletocarros.dev/images/lojas/152/veiculos/167065/original/vehicle_image_1698860174_ea2c65da4adf87888779cb9f17483a38.jpg"
+            width="600"
+            height="500"
           />
         </div>
-        <button
-          type="submit"
-          className="bg-blue-500 m-3 w-fit h-fit text-white rounded-md p-2 hover:bg-blue-800 "
-        >
-          Adicionar
-        </button>
+        <hr className="border-[#E1CCA8]  w-full border-solid border-0 border-t-[1.5px] m-0 p-0" />
       </section>
-      <hr className="my-3" />
-      <section>
-        <Cards />
+
+      <section className="flex py-4 justify-center items-center bg-[#1A3430] flex-col gap-4">
+        <h2 className="text-2xl text-[#E1CCA8] ">Catálogo</h2>
+        <section className="max-w-[1060px] ">
+          <Cards />
+        </section>
       </section>
     </main>
   );

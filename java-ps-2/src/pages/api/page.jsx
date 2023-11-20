@@ -20,37 +20,26 @@ export default function Cards() {
     getCarros();
   }, []);
 
-  var carrosMock = [
-    { id: 1, modelo: "KA", marca: "Ford", ano: 2013, categoria: "Hatchback" },
-    {
-      id: 2,
-      modelo: "HB20",
-      marca: "Hyundai",
-      ano: 2015,
-      categoria: "Hatchback",
-    },
-    { id: 3, modelo: "S40", marca: "Volvo", ano: 2002, categoria: "Sedan" },
-    { id: 4, modelo: "Tiguan", marca: "VW", ano: 2022, categoria: "SUV" },
-  ];
-
   return (
     <ul className="albuns">
-      {!carrosMock ? (
-        <li>
-          <h3>Carregando dados...</h3>
-        </li>
+      {!carros ? (
+        <img
+          src="https://cdn.dribbble.com/users/488614/screenshots/3518706/vroom.gif"
+          alt="this slowpoke moves"
+          width="250px"
+        />
       ) : (
-        carrosMock.map((carro) => (
+        carros.map((carro) => (
           <section
             key={carro.id}
-            className="border-solid border-1 border-black p-4 shadow-md rounded-md w-[300px]"
+            className="border-solid border-2 border-[#1A3430] bg-[#E1CCA8]  p-4 shadow-md rounded-md w-[320px]"
           >
-            <article className="flex gap-[5px]">
+            <article className="flex ttext-[#1A3430] justify-between">
               <div>
                 <p>Marca: {carro.marca}</p>
                 <p>Modelo: {carro.modelo}</p>
               </div>
-              <div>
+              <div className="">
                 <p>Ano: {carro.ano}</p>
                 <p>Categoria: {carro.categoria}</p>
               </div>
