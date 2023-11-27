@@ -23,7 +23,7 @@ export default function Home() {
       <section className="flex py-4 justify-center items-center bg-[#1A3430] flex-col gap-4">
         <h2 className="text-2xl text-[#E1CCA8] ">Catálogo</h2>
         <section className="max-w-[1060px] ">
-          <Cars />
+          <Cars showDelete={false}/>
         </section>
       </section>
       <Footer />

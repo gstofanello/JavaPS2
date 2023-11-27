@@ -2,6 +2,8 @@
 import Header from "../components/header";
 import Footer from "../components/footer";
 import { useEffect, useState } from "react";
+import Image from "next/image";
+const url = "https://java-proj-ps2.onrender.com/empregados";
 
 export default function Employees({
   showSalary = false,
@@ -9,11 +11,11 @@ export default function Employees({
   showFooter = true,
   showLine = true,
   showTitle = true,
+  showDelete = false,
 }) {
   const [employees, setEmployees] = useState(null);
 
   const getEmployees = () => {
-    const url = "https://java-proj-ps2.onrender.com/empregados";
     fetch(url)
       .then((response) => response.json())
       .then((json) => {
@@ -52,6 +54,16 @@ export default function Employees({
                   key={employee.id}
                   className="border-solid border-2 border-[#1A3430] bg-[#E1CCA8]  p-4 shadow-md rounded-md w-[310px]"
                 >
+                   {showDelete && (
+              <Image
+                onClick={() => deleteEmployee(employee.id)}
+                src="https://super.so/icon/dark/trash-2.svg"
+                alt="delete icon"
+                width={15}
+                height={15}
+                className="mb-2 cursor-pointer"
+              />
+            )}
                   <article className="flex ttext-[#1A3430] justify-between">
                     <div>
                       <p>Nome: {employee.nome}</p>
@@ -72,4 +84,64 @@ export default function Employees({
       {showFooter && <Footer />}
     </>
   );
+}
+export async function setEmployee(employee) {
+  if (
+    !employee ||
+    !employee.nome ||
+    !employee.salario ||
+    !employee.cargo 
+  ) {
+    return undefined;
+  }
+  let { nome, salario, cargo } = employee;
+  let options = {
+    method: "POST",
+    body: JSON.stringify({ nome, salario, cargo }),
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+
+  try {
+    const response = await fetch(url, options);
+    return await response.json();
+  } catch (error) {
+    alert("Erro ao adicionar empregado");
+    console.log(error);
+  }
+
+  return undefined;
+}
+
+export async function deleteEmployee(id) {
+
+  const deleteUrl = (`${url}/${id}`);
+
+  let options = {
+    method: "DELETE",
+  };
+  
+
+  // O metodo nao funciona quando tento deletar um empregado
+  // que criei no front, caso tenha criado utilizando thunderclient
+  // ele deleta, estranho pois o status vem 200 no front, o mesmo que vem no thunderclient
+  try {
+    let response = await fetch(deleteUrl, options);
+    if (response.ok) {
+      console.log(response);
+      return { success: true };
+    } else {
+
+      console.error('Request failed with status:', response.status);
+      return null; 
+    }
+  } catch (error) {
+    console.error('Error:', error);
+    return null; 
+  }
+  
+
+
+  return undefined;
 }

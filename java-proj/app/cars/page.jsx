@@ -1,11 +1,13 @@
 "use client";
 import { useEffect, useState } from "react";
+import Image from "next/image";
 
-export default function Cars() {
+const url = "https://java-proj-ps2.onrender.com/carros";
+
+export default function Cars(showDelete = false) {
   const [carros, setCarros] = useState(null);
 
   const getCarros = () => {
-    const url = "https://java-proj-ps2.onrender.com/carros";
     fetch(url)
       .then((response) => response.json())
       .then((json) => {
@@ -34,6 +36,16 @@ export default function Cars() {
             key={carro.id}
             className="border-solid border-2 border-[#1A3430] bg-[#E1CCA8]  p-4 shadow-md rounded-md w-[310px]"
           >
+            {showDelete && (
+              <Image
+                onClick={() => deleteCar(carro.id)}
+                src="https://super.so/icon/dark/trash-2.svg"
+                alt="delete icon"
+                width={15}
+                height={15}
+                className="mb-2 cursor-pointer"
+              />
+            )}
             <article className="flex text-[#1A3430] justify-between">
               <div>
                 <p>Marca: {carro.marca}</p>
@@ -51,81 +63,65 @@ export default function Cars() {
   );
 }
 
-export async function setCard(data) {
-    if (
-      !data ||
-      !data.name ||
-      !data.date ||
-      !data.salary ||
-      !data.email ||
-      !data.status ||
-      !data.avatar
-    ) {
-      return undefined;
-    }
-    let { name, date, salary, email, status, avatar } = data;
-    let number = parseInt(Math.random() * 100);
-    let gender = Math.random() > 0.5 ? "men" : "women";
-    let url =
-      "https://randomuser.me/api/portraits/" + gender + "/" + number + ".jpg";
-    avatar = url;
-    let options = {
-      method: "POST",
-      body: JSON.stringify({ name, date, salary, email, status, avatar }),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    };
-  
-    try {
-      const response = await fetch(APIURL, options);
-      return await response.json();
-    } catch (error) {
-      <Link to="/error"></Link>;
-    }
-  
+export async function setCarro(carro) {
+  if (
+    !carro ||
+    !carro.modelo ||
+    !carro.categoria ||
+    !carro.marca ||
+    !carro.ano
+  ) {
     return undefined;
   }
-  
-  export async function deletePost(id) {
-    if (!id) {
-      return undefined;
-    }
-  
-    let options = {
-      method: "DELETE",
-    };
-  
-    try {
-      let response = await fetch(APIURL + "/" + id, options);
-      return await response.json();
-    } catch (error) {
-      <Link to="/error"></Link>;
-    }
-  
-    return undefined;
+  let { modelo, categoria, marca, ano } = carro;
+  let options = {
+    method: "POST",
+    body: JSON.stringify({ modelo, categoria, marca, ano }),
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+
+  try {
+    const response = await fetch(url, options);
+    return await response.json();
+  } catch (error) {
+    alert("Erro ao adicionar carro");
+    console.log(error);
   }
-  export async function editPost(data) {
-    let { name, date, salary, email, status, id, avatar } = data;
+
+  return undefined;
+}
+
+export async function deleteCar(id) {
+
+  const deleteUrl = (`${url}/${id}`);
+
+  let options = {
+    method: "DELETE",
+  };
   
-    if (!data) {
-      return undefined;
+
+  // O metodo nao funciona quando tento deletar um carro
+  // que criei no front, caso tenha criado utilizando thunderclient
+  // ele deleta, estranho pois o status vem 200 no front, o mesmo que vem no thunderclient
+  try {
+    let response = await fetch(deleteUrl, options);
+    if (response.ok) {
+      console.log(response);
+      return { success: true };
+    } else {
+
+      console.error('Request failed with status:', response.status);
+      return null; 
     }
+  } catch (error) {
+    console.error('Error:', error);
+    return null; 
+  }
   
-    let options = {
-      method: "PUT",
-      body: JSON.stringify({ name, date, salary, email, status, id, avatar }),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    };
-  
-    try {
-      let response = await fetch(APIURL + "/" + id, options);
-      return await response.json();
-    } catch (error) {
-      <Link to="/error"></Link>;
-    }
-  
-    return undefined;
-  } 
+
+
+  return undefined;
+}
+

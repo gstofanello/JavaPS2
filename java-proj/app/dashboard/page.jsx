@@ -2,32 +2,68 @@
 import React, { useState } from "react";
 import Header from "../components/header";
 import Footer from "../components/footer";
-import Cars from "../cars/page";
-import Employees from "../employees/page";
+import Cars, { setCarro } from "../cars/page";
+import Employees, { setEmployee } from "../employees/page";
 
 export default function Dashboard() {
   const [showFormCars, setShowFormCars] = useState(false);
   const [modelFilter, setModelFilter] = useState("");
+  const [model, setModel] = useState("");
+  const [make, setMake] = useState("");
+  const [year, setYear] = useState("0");
+  const [category, setCategory] = useState("");
 
-  const handleAddCarClick = () => {
-    setShowFormCars(true);
-  };
-
-  const handleModelFilterChange = (event) => {
-    setModelFilter(event.target.value);
-    // Aqui você pode filtrar a lista de carros com base no modelo
-    // Implemente a lógica para filtrar a lista de carros
-  };
-
-  const handleFormSubmitCars = (event) => {
+  function carModelHandler(event) {
+    setModel(event.target.value);
+  }
+  function carMakeHandler(event) {
+    setMake(event.target.value);
+  }
+  function carYearHandler(event) {
+    setYear(event.target.value);
+  }
+  function carCategoryHandler(event) {
+    setCategory(event.target.value);
+  }
+  function submitCarHandler(event) {
     event.preventDefault();
-    // Lógica para enviar os dados do formulário (modelo, marca, ano, categoria) para a API
-    // Reset do estado do formulário após o envio bem-sucedido
-    setShowFormCars(false);
-  };
-
+    let post = { modelo: model, categoria: category, marca: make, ano: year };
+    setCarro(post)
+      .then((response) => {
+        response = alert("Carro adicionado com sucesso ");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
   const [showForm, setShowForm] = useState(false);
   const [nameFilter, setNameFilter] = useState("");
+
+  const [name, setName] = useState("");
+  const [salario, setSalario] = useState("");
+  const [cargo, setCargo] = useState("0");
+
+  function nameHandler(event) {
+    setName(event.target.value);
+  }
+  function salarioHandler(event) {
+    setSalario(event.target.value);
+  }
+  function cargoHandler(event) {
+    setCargo(event.target.value);
+  }
+
+  function submitHandler(event) {
+    event.preventDefault();
+    let post = { nome: name, cargo: cargo, salario: salario };
+    setEmployee(post)
+      .then((response) => {
+        response = alert("Empregado adicionado com sucesso ");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
 
   const handleAddEmployeeClick = () => {
     setShowForm(true);
@@ -35,14 +71,11 @@ export default function Dashboard() {
 
   const handleNameFilterChange = (event) => {
     setNameFilter(event.target.value);
-    // Aqui você pode filtrar a lista de funcionários com base no nome
-    // Implemente a lógica para filtrar a lista de funcionários
   };
 
   const handleFormSubmit = (event) => {
     event.preventDefault();
-    // Lógica para enviar os dados do formulário (nome, cargo, salário) para a API
-    // Reset do estado do formulário após o envio bem-sucedido
+
     setShowForm(false);
   };
   return (
@@ -53,7 +86,7 @@ export default function Dashboard() {
         <div className="flex flex-col items-center justify-center">
           {!showFormCars && (
             <button
-              onClick={handleAddCarClick}
+              onClick={() => setShowFormCars(true)}
               className="bg-[#E1CCA8] m-2 w-fit h-fit text-white rounded-md p-2 pl-4 hover:bg-[#a68855] transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-110 "
             >
               Adicionar Carro
@@ -62,13 +95,6 @@ export default function Dashboard() {
           {showFormCars && (
             <div className="flex flex-col items-center justify-center">
               <div className="flex items-center justify-between">
-                <button
-                  onClick={handleFormSubmitCars}
-                  type="submit"
-                  className="bg-[#E1CCA8] m-2 w-fit h-fit text-white rounded-md p-2 hover:bg-[#a68855] transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-110 "
-                >
-                  Adicionar
-                </button>
                 <button
                   onClick={() => setShowFormCars(false)}
                   className="bg-[#E1CCA8] m-2 text-white rounded-full w-[20px] h-[20px] flex items-center justify-center hover:bg-[#a68855] transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-110 "
@@ -79,24 +105,35 @@ export default function Dashboard() {
               <input
                 type="text"
                 placeholder="Modelo"
-                className="border-solid border-2 border-[#E1CCA8] bg-[#33403e]  p-1 my-2  rounded-md w-[210px]"
+                className="border-solid border-2 border-[#E1CCA8] bg-[#33403e] text-white p-1 my-2  rounded-md w-[210px]"
+                onChange={carModelHandler}
               />
 
               <input
                 type="text"
                 placeholder="Marca"
-                className="border-solid border-2 border-[#E1CCA8] bg-[#33403e]  p-1 my-2  rounded-md w-[210px]"
+                className="border-solid border-2 border-[#E1CCA8] bg-[#33403e] text-white p-1 my-2  rounded-md w-[210px]"
+                onChange={carMakeHandler}
               />
               <input
                 type="number"
                 placeholder="Ano"
-                className="border-solid border-2 border-[#E1CCA8] bg-[#33403e]  p-1 my-2  rounded-md w-[210px]"
+                className="border-solid border-2 border-[#E1CCA8] bg-[#33403e] text-white  p-1 my-2  rounded-md w-[210px]"
+                onChange={carYearHandler}
               />
               <input
                 type="text"
                 placeholder="Categoria"
-                className="border-solid border-2 border-[#E1CCA8] bg-[#33403e]  p-1 my-2  rounded-md w-[210px]"
+                className="border-solid border-2 border-[#E1CCA8] bg-[#33403e] text-white p-1 my-2  rounded-md w-[210px]"
+                onChange={carCategoryHandler}
               />
+              <button
+                onClick={submitCarHandler}
+                type="submit"
+                className="bg-[#E1CCA8] m-2 w-fit h-fit text-white rounded-md p-2 hover:bg-[#a68855] transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-110 "
+              >
+                Adicionar
+              </button>
             </div>
           )}
         </div>
@@ -116,13 +153,6 @@ export default function Dashboard() {
             <div className="flex flex-col items-center justify-center">
               <div className="flex items-center justify-between">
                 <button
-                  onClick={handleFormSubmit}
-                  type="submit"
-                  className="bg-[#E1CCA8] m-2 w-fit h-fit text-white rounded-md p-2 hover:bg-[#a68855] transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-110 "
-                >
-                  Adicionar
-                </button>
-                <button
                   onClick={() => setShowForm(false)}
                   className="bg-[#E1CCA8] m-2 text-white rounded-full w-[20px] h-[20px] flex items-center justify-center hover:bg-[#a68855] transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-110 "
                 >
@@ -132,18 +162,28 @@ export default function Dashboard() {
               <input
                 type="text"
                 placeholder="Nome"
-                className="border-solid border-2 border-[#E1CCA8] bg-[#33403e]  p-1 my-2  rounded-md w-[210px]"
+                className="border-solid border-2 text-white border-[#E1CCA8] bg-[#33403e]  p-1 my-2  rounded-md w-[210px]"
+                onChange={nameHandler}
               />
               <input
                 type="text"
                 placeholder="Cargo"
-                className="border-solid border-2 border-[#E1CCA8] bg-[#33403e]  p-1 my-2  rounded-md w-[210px]"
+                className="border-solid border-2 text-white border-[#E1CCA8] bg-[#33403e]  p-1 my-2  rounded-md w-[210px]"
+                onChange={cargoHandler}
               />
               <input
                 type="number"
                 placeholder="Salário"
-                className="border-solid border-2 border-[#E1CCA8] bg-[#33403e]  p-1 my-2  rounded-md w-[210px]"
+                className="border-solid border-2 text-white border-[#E1CCA8] bg-[#33403e]  p-1 my-2  rounded-md w-[210px]"
+                onChange={salarioHandler}
               />
+                <button
+                  onClick={submitHandler}
+                  type="submit"
+                  className="bg-[#E1CCA8] m-2 w-fit h-fit text-white rounded-md p-2 hover:bg-[#a68855] transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-110 "
+                >
+                  Adicionar
+                </button>
             </div>
           )}
         </div>
@@ -158,11 +198,11 @@ export default function Dashboard() {
               type="text"
               placeholder="Filtrar por modelo"
               value={modelFilter}
-              onChange={handleModelFilterChange}
+              onChange={handleFormSubmit}
               className="border-solid border-2 border-[#E1CCA8] bg-[#33403e]  p-1 my-2  rounded-md w-[210px]"
             />
           </div>
-          <Cars />
+          <Cars showDelete={true}/>
         </section>
         <section className="flex flex-col items-center justify-center ">
           <hr className="border-[#E1CCA8] w-full border-solid border-0 border-t-[1.5px] m-0 p-0" />
@@ -172,7 +212,7 @@ export default function Dashboard() {
               type="text"
               placeholder="Filtrar por modelo"
               value={modelFilter}
-              onChange={handleModelFilterChange}
+              onChange={handleFormSubmit}
               className="border-solid border-2 border-[#E1CCA8] bg-[#33403e]  p-1 my-2  rounded-md w-[210px]"
             />
           </div>
@@ -182,6 +222,7 @@ export default function Dashboard() {
             showFooter={false}
             showLine={false}
             showTitle={false}
+            showDelete={true}
           />
         </section>
       </div>
